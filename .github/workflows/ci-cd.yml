@@ -163,18 +163,18 @@ jobs:
           GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
     - name: Test
       run: mvn --batch-mode -Dmaven.test.failure.ignore=true test 
-    - name: Test Report
-      uses: phoenix-actions/test-reporting@v8
-      id: test-report 
-      if: success() || failure()    # run this step even if previous step failed
-      with:
-        name: JEST Tests            # Name of the check run which will be created
-        path: target/surefire-reports/TEST-*.xml    # Path to test results
-        reporter: java-junit       # Format of test results
-        fail-on-error: 'false'
-    - name: Read output variables
-      run: |
-         echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
+  #  - name: Test Report
+  #    uses: phoenix-actions/test-reporting@v8
+  #    id: test-report 
+  #    if: success() || failure()    # run this step even if previous step failed
+  #    with:
+  #      name: JEST Tests            # Name of the check run which will be created
+  #      path: target/surefire-reports/TEST-*.xml    # Path to test results
+  #      reporter: java-junit       # Format of test results
+  #      fail-on-error: 'false'
+  #  - name: Read output variables
+  #    run: |
+  #       echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
   #build:
   #  name: Building, Pushing and Deploying the Image
   #  runs-on: ubuntu-latest
