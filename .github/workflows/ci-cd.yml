@@ -25,7 +25,7 @@ jobs:
             /java-sample-application/source-code/productcatalogue/**
     
     -  name: Build and push productcatalouge image
-       if: steps.productcatalouge.outputs.any_changed == 'true'
+       #if: steps.productcatalouge.outputs.any_changed == 'true'
        env:
          image-name-productcatalogue: productcatalouge-image
          
@@ -44,7 +44,7 @@ jobs:
             /java-sample-application/source-code/shopfront/**
 
     -  name: Build and push shopfront image
-       if: steps.shopfront.outputs.any_changed == 'true'
+     #  if: steps.shopfront.outputs.any_changed == 'true'
        env:
          image-name-shopfront: shopfront-image
          
