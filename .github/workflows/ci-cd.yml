@@ -34,7 +34,7 @@ jobs:
        with:
         context: ./java-sample-application/source-code/productcatalogue
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalouge }}:${{ github.sha }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalogue }}:${{ github.sha }}
     
     - name: File changes for shopfront
       id: shopfront
