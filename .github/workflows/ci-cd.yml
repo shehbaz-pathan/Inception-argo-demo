@@ -10,8 +10,6 @@ on:
       - 'feature/**'
 jobs:
   compile:
-    if: contains(fromJson('["pull_request"]'), github.event_name )|| (github.ref == 'refs/heads/master')
-##for temporary purpose
     runs-on: ubuntu-20.04
     strategy:
       matrix:
