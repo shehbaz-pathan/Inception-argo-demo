@@ -1,7 +1,7 @@
 name: CI and CD
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 jobs:
   build:
     name: Building, Pushing and Deploying the Image
