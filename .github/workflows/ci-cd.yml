@@ -10,8 +10,6 @@ on:
       - 'feature/**'
 jobs:
   compile:
-    if: contains(fromJson('["pull_request"]'), github.event_name )|| (github.ref == 'refs/heads/master')
-    #temporary
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -44,7 +42,6 @@ jobs:
         run: mvn -B compile 
   security:
     runs-on: ubuntu-latest
-    if: contains(fromJson('["pull_request"]'), github.event_name )|| (github.ref == 'refs/heads/master')
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities (Monitor only)
@@ -63,7 +60,7 @@ jobs:
           args: --sarif-file-output=snyk.sarif
   build_and_test:
     runs-on: ubuntu-latest
-    #needs: compile
+    needs: compile
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
@@ -103,7 +100,8 @@ jobs:
           GITHUB_USER_REF: ${{ secrets.GIT_USERNAME }}
 
           GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
-    
+    - name: Test
+      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
