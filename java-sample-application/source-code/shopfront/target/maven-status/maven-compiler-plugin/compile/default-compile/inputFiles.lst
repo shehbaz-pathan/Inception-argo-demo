@@ -1,0 +1,9 @@
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/services/dto/ProductDTO.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/services/ProductService.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/ShopfrontApplication.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/services/dto/StockDTO.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/ProductRepo.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java
+/home/rucha/argocd/argocd/java-sample-application/src/main/java/uk/co/danielbryant/djshopping/shopfront/model/Product.java

@@ -1,0 +1,6 @@
+/home/rucha/argocd/argocd/java-sample-application/source-code/productcatalogue/src/main/java/uk/co/danielbryant/djshopping/productcatalogue/services/ProductService.java
+/home/rucha/argocd/argocd/java-sample-application/source-code/productcatalogue/src/main/java/uk/co/danielbryant/djshopping/productcatalogue/resources/ProductResource.java
+/home/rucha/argocd/argocd/java-sample-application/source-code/productcatalogue/src/main/java/uk/co/danielbryant/djshopping/productcatalogue/model/Product.java
+/home/rucha/argocd/argocd/java-sample-application/source-code/productcatalogue/src/main/java/uk/co/danielbryant/djshopping/productcatalogue/ProductServiceApplication.java
+/home/rucha/argocd/argocd/java-sample-application/source-code/productcatalogue/src/main/java/uk/co/danielbryant/djshopping/productcatalogue/configuration/ProductServiceConfiguration.java
+/home/rucha/argocd/argocd/java-sample-application/source-code/productcatalogue/src/main/java/uk/co/danielbryant/djshopping/productcatalogue/healthchecks/BasicHealthCheck.java
