@@ -1,0 +1,2 @@
+uk.co.danielbryant.djshopping.shopfront.services.ProductService#getProducts()Ljava/util/List;
+java.util.stream.Collectors#toList()Ljava/util/stream/Collector;

@@ -1,0 +1,4 @@
+uk.co.danielbryant.djshopping.productcatalogue.ProductServiceApplication#run(Luk/co/danielbryant/djshopping/productcatalogue/configuration/ProductServiceConfiguration;Lio/dropwizard/setup/Environment;)V
+uk.co.danielbryant.djshopping.productcatalogue.healthchecks.BasicHealthCheck#<init>(Ljava/lang/String;)V
+uk.co.danielbryant.djshopping.productcatalogue.healthchecks.BasicHealthCheck#instance-init#
+com.google.inject.Guice#createInjector([Lcom/google/inject/Module;)Lcom/google/inject/Injector;

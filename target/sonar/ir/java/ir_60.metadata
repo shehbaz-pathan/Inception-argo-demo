@@ -1,0 +1,5 @@
+uk.co.danielbryant.djshopping.productcatalogue.services.ProductService#<init>()V
+uk.co.danielbryant.djshopping.productcatalogue.model.Product#instance-init#
+java.math.BigDecimal#instance-init#
+java.math.BigDecimal#<init>(D)V
+uk.co.danielbryant.djshopping.productcatalogue.model.Product#<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/math/BigDecimal;)V

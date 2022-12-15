@@ -1,0 +1,60 @@
+
+zuk.co.danielbryant.djshopping.shopfront.controllers.HomeController#index(Lorg/springframework/ui/Model;)Ljava/lang/String;»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java ("startingBlock*Í
+startingBlock»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java ($àÖ
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java (#%
+modelorg.springframework.ui.Model"java.util.HashMap*
+1*©
+1»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java (ì
+ê
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java' (5E
+%0?uk.co.danielbryant.djshopping.shopfront.services.ProductService"__id*v
+
+__unknown_file (Z*XD
+Buk.co.danielbryant.djshopping.shopfront.controllers.HomeController"
+productService∑¥
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java' (C
+%1java.util.List"]uk.co.danielbryant.djshopping.shopfront.services.ProductService#getProducts()Ljava/util/List;*c
+
+__unknown_file (G
+E
+%0?uk.co.danielbryant.djshopping.shopfront.services.ProductService2getProducts()ü
+ú
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java (D"
+%2org.springframework.ui.Model"__mapSet*C
+
+__unknown_file ('
+%
+modelorg.springframework.ui.Model*(
+
+__unknown_file (
+
+products*2
+
+__unknown_file (
+
+%1java.util.Listç
+ä
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java (
+%3"template!index*b
+
+__unknown_file (F"D
+Buk.co.danielbryant.djshopping.shopfront.controllers.HomeController*C
+
+__unknown_file ('
+%
+modelorg.springframework.ui.Model"÷
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java (	
+index:Ú
+»
+Ω/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/controllers/HomeController.java (#%
+modelorg.springframework.ui.ModelBFD
+Buk.co.danielbryant.djshopping.shopfront.controllers.HomeControllerH

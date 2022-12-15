@@ -1,0 +1,2 @@
+uk.co.danielbryant.djshopping.shopfront.ShopfrontApplication#main([Ljava/lang/String;)V
+org.springframework.boot.SpringApplication#run(Ljava/lang/Object;[Ljava/lang/String;)Lorg/springframework/context/ConfigurableApplicationContext;

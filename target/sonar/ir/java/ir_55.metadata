@@ -1,0 +1,4 @@
+uk.co.danielbryant.djshopping.productcatalogue.resources.ProductResource#getProduct(Ljava/lang/String;)Ljavax/ws/rs/core/Response;
+java.util.Optional#isPresent()Z
+java.util.Optional#get()Ljava/lang/Object;
+javax.ws.rs.core.Response#status(Ljavax/ws/rs/core/Response$Status;)Ljavax/ws/rs/core/Response$ResponseBuilder;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="5.836" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="5.267" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="jansi.mode" value="strip"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -30,18 +30,18 @@
     <property name="java.class.version" value="58.0"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="maven.test.failure.ignore" value="true"/>
     <property name="os.version" value="5.15.0-1024-azure"/>
     <property name="library.jansi.path" value="/usr/share/apache-maven-3.8.6/lib/jansi-native"/>
     <property name="user.home" value="/home/runner"/>
     <property name="user.timezone" value="Etc/UTC"/>
     <property name="file.encoding" value="UTF-8"/>
     <property name="java.specification.version" value="14"/>
+    <property name="sonar.projectKey" value="ruchabhange_Inception-argo-demo"/>
     <property name="user.name" value="runner"/>
     <property name="java.class.path" value="/usr/share/apache-maven-3.8.6/boot/plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="14"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher --batch-mode -Dmaven.test.failure.ignore=true test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ruchabhange_Inception-argo-demo"/>
     <property name="java.home" value="/opt/hostedtoolcache/jdk/14.0.2/x64"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -56,5 +56,5 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="java.vendor.version" value="Zulu14.29+23-CA"/>
   </properties>
-  <testcase name="contextLoads" classname="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="0.018"/>
+  <testcase name="contextLoads" classname="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="0.021"/>
 </testsuite>
