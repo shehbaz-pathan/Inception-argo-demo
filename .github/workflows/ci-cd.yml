@@ -56,7 +56,7 @@ jobs:
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}
         
     -  name: Update Version for productcatalouge image
-       if: steps.productcatalouge.outputs.any_changed == 'true'
+       #if: steps.productcatalouge.outputs.any_changed == 'true'
        run: |
           version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
           echo "$version for Production envirornment"
@@ -68,7 +68,7 @@ jobs:
           cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
     
     -  name: Update Version for shopfront image
-       if: steps.shopfront.outputs.any_changed == 'true'
+       #if: steps.shopfront.outputs.any_changed == 'true'
        run: |
           version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
           echo "$version for Production envirornment"
