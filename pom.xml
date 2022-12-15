@@ -25,6 +25,10 @@
         <module>java-sample-application/source-code/productcatalogue</module>
         <module>java-sample-application/source-code/shopfront</module>
     </modules>
+    <properties>
+        <sonar.organization>ruchabhange</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
     <dependencies>
          <dependency>
                <groupId>junit</groupId>
