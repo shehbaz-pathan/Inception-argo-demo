@@ -1,0 +1,2 @@
+uk.co.danielbryant.djshopping.productcatalogue.services.ProductService#getProduct(Ljava/lang/String;)Ljava/util/Optional;
+java.util.Optional#ofNullable(Ljava/lang/Object;)Ljava/util/Optional;

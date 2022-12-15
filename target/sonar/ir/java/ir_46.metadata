@@ -1,0 +1,2 @@
+uk.co.danielbryant.djshopping.productcatalogue.healthchecks.BasicHealthCheck#check()Lcom/codahale/metrics/health/HealthCheck$Result;
+com.codahale.metrics.health.HealthCheck$Result#healthy(Ljava/lang/String;)Lcom/codahale/metrics/health/HealthCheck$Result;

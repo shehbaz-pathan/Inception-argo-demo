@@ -7,7 +7,7 @@
     <groupId>com.mkyong.multi</groupId>
     <artifactId>java-multi-modules</artifactId>
     <packaging>pom</packaging>
-	<version>1.0.10.11</version>
+	<version>1.0.10.11.12</version>
     <distributionManagement>
             <repository>
               <id>github</id>

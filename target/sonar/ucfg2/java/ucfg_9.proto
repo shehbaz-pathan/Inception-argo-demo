@@ -1,0 +1,36 @@
+
+Vuk.co.danielbryant.djshopping.shopfront.repo.StockRepo#stocksNotFound()Ljava/util/Map;º
+±/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java/! /(/"1*¥
+
+1º
+±/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java0 0(Ñ
+Å
+º
+±/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java0 0(
+%0org.slf4j.Logger"__id*"
+
+__unknown_file (
+""ãà
+º
+±/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java0 0(6
+
+%1void"*org.slf4j.Logger#info(Ljava/lang/String;)V*4
+
+__unknown_file (
+
+%0org.slf4j.Logger*?
+
+__unknown_file (#!
+stocksNotFound *** FALLBACK ***2info(Ljava/lang/String;)Å
+˛
+º
+±/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java1 1($
+%2java.util.Map"__id*"
+
+__unknown_file (
+"""÷
+º
+±/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.java1 1(%
+
+%2java.util.MapB:8
+6uk.co.danielbryant.djshopping.shopfront.repo.StockRepoH

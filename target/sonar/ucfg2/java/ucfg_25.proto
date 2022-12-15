@@ -1,0 +1,25 @@
+
+_uk.co.danielbryant.djshopping.shopfront.resources.ProductResource#getProducts()Ljava/util/List;Ç
+¼/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.java ($"1*ÿ	
+1Ç
+¼/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.java (‘
+Ž
+Ç
+¼/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.java (E
+%0?uk.co.danielbryant.djshopping.shopfront.services.ProductService"__id*u
+
+__unknown_file (Y*WC
+Auk.co.danielbryant.djshopping.shopfront.resources.ProductResource"
+productService¶³
+Ç
+¼/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.java (+
+%1java.util.List"]uk.co.danielbryant.djshopping.shopfront.services.ProductService#getProducts()Ljava/util/List;*c
+
+__unknown_file (G
+E
+%0?uk.co.danielbryant.djshopping.shopfront.services.ProductService2getProducts()"â
+Ç
+¼/home/runner/work/Inception-argo-demo/Inception-argo-demo/java-sample-application/source-code/shopfront/src/main/java/uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.java (,
+
+%1java.util.ListBEC
+Auk.co.danielbryant.djshopping.shopfront.resources.ProductResourceH

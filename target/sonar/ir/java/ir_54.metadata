@@ -1,0 +1,2 @@
+uk.co.danielbryant.djshopping.productcatalogue.resources.ProductResource#getAllProducts()Ljavax/ws/rs/core/Response;
+javax.ws.rs.core.Response#status(I)Ljavax/ws/rs/core/Response$ResponseBuilder;

@@ -1,0 +1,7 @@
+organization=ruchabhange
+projectKey=ruchabhange_Inception-argo-demo
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.35660
+dashboardUrl=https://sonarcloud.io/dashboard?id=ruchabhange_Inception-argo-demo&branch=feature%2Fci&resolved=false
+ceTaskId=AYUU17fO6SpkfE_8dH7N
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AYUU17fO6SpkfE_8dH7N

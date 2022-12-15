@@ -1,0 +1,3 @@
+uk.co.danielbryant.djshopping.shopfront.repo.ProductRepo#getProductDTOs()Ljava/util/Map;
+java.util.function.Function#identity()Ljava/util/function/Function;
+java.util.stream.Collectors#toMap(Ljava/util/function/Function;Ljava/util/function/Function;)Ljava/util/stream/Collector;
