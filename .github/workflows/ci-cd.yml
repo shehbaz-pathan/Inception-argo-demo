@@ -162,7 +162,7 @@ jobs:
 
           GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
     - name: Test
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true #test
+      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test -X
     - name: Test Report
       uses: phoenix-actions/test-reporting@v8
       id: test-report 
