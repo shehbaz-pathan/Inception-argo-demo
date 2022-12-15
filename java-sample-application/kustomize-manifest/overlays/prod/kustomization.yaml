@@ -15,20 +15,20 @@ replicas:
    count: 3
 
 patches:
-  - target:
-      kind: Service
-      name: productcatalogue
-    patch: |-
-      - op: replace
-        path: /spec/ports/0/port
-        value: 8031
-  - target:
-      kind: Service
-      name: shopfront
-    patch: |-
-      - op: replace
-        path: /spec/ports/0/port
-        value: 8030
+#  - target:
+#      kind: Service
+#      name: productcatalogue
+#    patch: |-
+#      - op: replace
+#        path: /spec/ports/0/port
+#        value: 8031
+#  - target:
+#      kind: Service
+#      name: shopfront
+#    patch: |-
+#      - op: replace
+#        path: /spec/ports/0/port
+#        value: 8030
   - target:
       kind: Deployment
       name: productcatalogue
