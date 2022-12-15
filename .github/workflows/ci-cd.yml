@@ -79,3 +79,8 @@ jobs:
           sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
           cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
 
+    -  name: Commit and push changes
+       uses: devops-infra/action-commit-push@v0.3
+       with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Image version updated
