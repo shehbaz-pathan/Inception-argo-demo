@@ -108,17 +108,17 @@ jobs:
         files: |
             /java-sample-application/source-code/productcatalogue/**
     
-    -  name: Build and push productcatalouge image
-       if: steps.productcatalouge.outputs.any_changed == 'true'
-       env:
-         image-name-productcatalogue: productcatalouge-image
-         
-       id: build-and-push-productcatalouge-image
-       uses: docker/build-push-action@v3
-       with:
-        context: ./java-sample-application/source-code/productcatalogue
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalouge }}:${{ github.sha }}
+    - name: Build and push productcatalouge image
+      if: steps.productcatalouge.outputs.any_changed == 'true'
+      env:
+        image-name-productcatalogue: productcatalouge-image
+        
+      id: build-and-push-productcatalouge-image
+      uses: docker/build-push-action@v3
+      with:
+       context: ./java-sample-application/source-code/productcatalogue
+       push: true
+       tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalouge }}:${{ github.sha }}
     
     - name: File changes for shopfront
       id: shopfront
@@ -127,41 +127,41 @@ jobs:
         files: |
             /java-sample-application/source-code/shopfront/**
 
-    -  name: Build and push shopfront image
-       if: steps.shopfront.outputs.any_changed == 'true'
-       env:
-         image-name-shopfront: shopfront-image
-         
-       id: build-and-push-shopfront-image
-       uses: docker/build-push-action@v3
-       with:
-        context: ./java-sample-application/source-code/shopfront
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}
+    - name: Build and push shopfront image
+      if: steps.shopfront.outputs.any_changed == 'true'
+      env:
+        image-name-shopfront: shopfront-image
         
-    -  name: Update Version for productcatalouge image
-       if: steps.productcatalouge.outputs.any_changed == 'true'
-       run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
-          echo "$version for Production envirornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml| productcatalouge-image: | awk '{print $2}'
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-          echo "$version for test enviornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
+      id: build-and-push-shopfront-image
+      uses: docker/build-push-action@v3
+      with:
+       context: ./java-sample-application/source-code/shopfront
+       push: true
+       tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}
+       
+    - name: Update Version for productcatalouge image
+      if: steps.productcatalouge.outputs.any_changed == 'true'
+      run: |
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
+         echo "$version for Production envirornment"
+         sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
+         cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml| productcatalouge-image: | awk '{print $2}'
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+         echo "$version for test enviornment"
+         sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+         cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
     
-    -  name: Update Version for shopfront image
-       if: steps.shopfront.outputs.any_changed == 'true'
-       run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
-          echo "$version for Production envirornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml| grep shopfront-image:: | awk '{print $2}'
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-          echo "$version for test enviornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
+    - name: Update Version for shopfront image
+      if: steps.shopfront.outputs.any_changed == 'true'
+      run: |
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
+         echo "$version for Production envirornment"
+         sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
+         cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml| grep shopfront-image:: | awk '{print $2}'
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+         echo "$version for test enviornment"
+         sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+         cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
 
          
 #  Upload_Artifact:
