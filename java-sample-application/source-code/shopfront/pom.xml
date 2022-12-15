@@ -16,14 +16,33 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.22.RELEASE</version>
     </parent>
-
+    <distributionManagement>
+            <repository>
+              <id>github</id>
+              <name>inception</name>
+              <url>https://maven.pkg.github.com/ruchabhange/Inception-argo-demo</url>
+            </repository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>github</id>
+        </profile>
+    </profiles>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <junit.jupiter.version>5.2.0</junit.jupiter.version>
+        <junit.vintage.version>5.2.0</junit.vintage.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+               <groupId>junit</groupId>
+               <artifactId>junit</artifactId>
+               <version>4.13.1</version>
+               <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -65,7 +84,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                     <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
