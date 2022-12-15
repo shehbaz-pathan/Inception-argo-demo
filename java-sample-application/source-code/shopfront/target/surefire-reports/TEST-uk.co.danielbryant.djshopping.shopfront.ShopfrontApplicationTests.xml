@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="7.297" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="5.836" tests="1" errors="0" skipped="0" failures="0">
   <properties>
+    <property name="jansi.mode" value="strip"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="14.0.2+12"/>
     <property name="sun.boot.library.path" value="/opt/hostedtoolcache/jdk/14.0.2/x64/lib"/>
@@ -8,8 +9,8 @@
     <property name="maven.multiModuleProjectDirectory" value="/home/runner/work/Inception-argo-demo/Inception-argo-demo"/>
     <property name="java.vm.vendor" value="Azul Systems, Inc."/>
     <property name="java.vendor.url" value="http://www.azulsystems.com/"/>
-    <property name="path.separator" value=":"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=":"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
@@ -29,6 +30,7 @@
     <property name="java.class.version" value="58.0"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="maven.test.failure.ignore" value="true"/>
     <property name="os.version" value="5.15.0-1024-azure"/>
     <property name="library.jansi.path" value="/usr/share/apache-maven-3.8.6/lib/jansi-native"/>
     <property name="user.home" value="/home/runner"/>
@@ -39,7 +41,7 @@
     <property name="java.class.path" value="/usr/share/apache-maven-3.8.6/boot/plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="14"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher deploy"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher --batch-mode -Dmaven.test.failure.ignore=true test"/>
     <property name="java.home" value="/opt/hostedtoolcache/jdk/14.0.2/x64"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -54,5 +56,5 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="java.vendor.version" value="Zulu14.29+23-CA"/>
   </properties>
-  <testcase name="contextLoads" classname="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="0.026"/>
+  <testcase name="contextLoads" classname="uk.co.danielbryant.djshopping.shopfront.ShopfrontApplicationTests" time="0.018"/>
 </testsuite>
