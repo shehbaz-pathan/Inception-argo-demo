@@ -10,6 +10,8 @@ on:
       - 'feature/**'
 jobs:
   compile:
+    if: contains(fromJson('["pull_request"]'), github.event_name )|| (github.ref == 'refs/heads/master')
+    #temporary
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -61,7 +63,7 @@ jobs:
           args: --sarif-file-output=snyk.sarif
   build_and_test:
     runs-on: ubuntu-latest
-    needs: compile
+    #needs: compile
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
@@ -151,8 +153,8 @@ jobs:
 
     - name: Build project with Maven
       run: | 
-           mvn -B package --file pom.xml 
-           mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false
+           mvn -B package --file pom.xml -X
+           mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false -X
            mvn deploy  
       env:
 
