@@ -53,6 +53,10 @@ jobs:
         context: ./java-sample-application/source-code/shopfront
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: 'argocd'
         
     -  name: Update Version for productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'

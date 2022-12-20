@@ -8,6 +8,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        ref: 'argocd'
       
     - name: Update Version for productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
