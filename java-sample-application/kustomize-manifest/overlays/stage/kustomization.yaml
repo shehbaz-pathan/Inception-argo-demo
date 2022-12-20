@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+resources:
+ - github-secret.yaml
+ - script-config-map.yaml
+ - post-sync-stage.yaml
+commonLabels:
+  purpose: Inception-demo
+  env : stage
+
+replicas:
+ - name: productcatalogue
+   count: 2 
+ - name: shopfront
+   count: 2
+
+patches:
+  - target:
+      kind: Deployment
+      name: productcatalogue
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: '6255/productcatalouge-image:6f81384dac9d32b1f413ae3b9c262e9b5d67be32'
+  - target:
+      kind: Deployment
+      name: shopfront
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: '6255/shopfront-image:6f81384dac9d32b1f413ae3b9c262e9b5d67be32'
+
