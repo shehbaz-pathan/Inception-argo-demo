@@ -42,7 +42,6 @@ jobs:
       with:
         files: |
             /java-sample-application/source-code/shopfront/**
-
     -  name: Build and push shopfront image
      #  if: steps.shopfront.outputs.any_changed == 'true'
        env:
@@ -58,10 +57,6 @@ jobs:
     -  name: Update Version for productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
        run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
-          echo "$version for Production envirornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml| productcatalouge-image: | awk '{print $2}'
           version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
           echo "$version for test enviornment"
           sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
@@ -70,15 +65,10 @@ jobs:
     -  name: Update Version for shopfront image
        #if: steps.shopfront.outputs.any_changed == 'true'
        run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev| cut -c2- | rev)
-          echo "$version for Production envirornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml| grep shopfront-image:: | awk '{print $2}'
           version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
           echo "$version for test enviornment"
           sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
           cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
-
     -  name: Commit and push changes
        uses: devops-infra/action-commit-push@v0.3
        with:
