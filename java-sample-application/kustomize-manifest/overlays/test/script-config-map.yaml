@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: post-sync-script
+data:
+  status_test.sh: |+
+      #!/bin/bash
+      productcatalog_status_code=$(curl http:/productcatalogue:8020/products -s -o /dev/null -w %{http_code})
+      shopfront_status_code=$(curl http://shopfront:8010/ -s -o /dev/null -w %{http_code})
+      if [ ${productcatalog_status_code} -eq 200 ] && [ ${shopfront_status_code} -eq 200 ]
+      then
+      curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/ruchabhange/Inception-argo-demo/actions/workflows/prod-deployment.yaml/dispatches -d '{"ref":"master"}'
+      echo "Test successful, triggered prod workflow"
+      else
+      echo "Test failed"
+      exit 1
+      fi
