@@ -18,7 +18,7 @@ public class ProductService {
         fakeProductDAO.put("5", new Product("5", "Multitool", "Multitools", new BigDecimal(154.10)));
         fakeProductDAO.put("6", new Product("6", "Newtool", "Newtool", new BigDecimal(154.10)));
         fakeProductDAO.put("7", new Product("7", "Oldtool", "Oldtool", new BigDecimal(154.10)));  
-      
+        fakeProductDAO.put("8", new Product("8", "Nexttool", "Nexttool", new BigDecimal(154.10))); 
 }
 
     public List<Product> getAllProducts() {
