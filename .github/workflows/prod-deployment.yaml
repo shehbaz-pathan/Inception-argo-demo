@@ -34,6 +34,7 @@ jobs:
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
+          source_branch: "production-deployment"
           destination_branch: "argocd"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "Production Deployment"
