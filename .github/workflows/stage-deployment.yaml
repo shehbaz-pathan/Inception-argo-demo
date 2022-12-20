@@ -1,0 +1,32 @@
+name: Prod Deployment
+on: [workflow_dispatch]
+jobs:
+   build:
+    name: Deploying image to prod env
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: 'argocd'
+      
+    - name: Update Version for productcatalouge image
+       #if: steps.productcatalouge.outputs.any_changed == 'true'
+      run: |
+          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+          echo "$version for prod enviornment"
+          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
+          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
+    
+    - name: Update Version for shopfront image
+       #if: steps.shopfront.outputs.any_changed == 'true'
+      run: |
+          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+          echo "$version for prod enviornment"
+          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
+          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
+    - name: Commit and push changes
+      uses: devops-infra/action-commit-push@v0.3
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Image version updated
