@@ -30,7 +30,8 @@ jobs:
           distribution: 'adopt'
 
     - name: Build with Maven
-      run: mvn -B package --file ./java-sample-application/source-code/productcatalogue/pom.xml
+      run: |
+          cd java-sample-application/source-code/productcatalogue/ && mvn --batch-mode --update-snapshots package
     
     -  name: Build and push productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
@@ -57,7 +58,8 @@ jobs:
           distribution: 'adopt'
           
     - name: Build with Maven
-      run: mvn -B package --file ./java-sample-application/source-code/shopfront/pom.xml
+      run: |
+          cd java-sample-application/source-code/shopfront/ && mvn --batch-mode --update-snapshots package
     -  name: Build and push shopfront image
      #  if: steps.shopfront.outputs.any_changed == 'true'
        env:
