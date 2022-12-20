@@ -14,7 +14,7 @@ spec:
        containers:
           - name: postsycn-test
             image: 6255/curl:1.0
-            command: ["/bin/bash","/script/status_test.sh"]
+            command: ["bash","/script/status_test.sh"]
             env:
               - name: GITHUB_TOKEN
                 valueFrom:
@@ -24,7 +24,6 @@ spec:
             volumeMounts:
                - name: script
                  mountPath: /script
-                 subPath: status_test.sh
        volumes:
           - name: script
             configMap:
@@ -32,3 +31,4 @@ spec:
               items:
                - key: status_test.sh
                  path: status_test.sh
+              defaulMode: 0755
