@@ -31,4 +31,4 @@ spec:
               items:
                - key: status_test.sh
                  path: status_test.sh
-              defaulMode: 0755
+              defaultMode: 0755
