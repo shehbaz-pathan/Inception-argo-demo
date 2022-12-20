@@ -30,7 +30,7 @@ jobs:
           distribution: 'adopt'
 
     - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots package
+      run: mvn -B package --file ./java-sample-application/source-code/productcatalogue/pom.xml
     
     -  name: Build and push productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
@@ -57,7 +57,7 @@ jobs:
           distribution: 'adopt'
           
     - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots package
+      run: mvn -B package --file ./java-sample-application/source-code/shopfront/pom.xml
     -  name: Build and push shopfront image
      #  if: steps.shopfront.outputs.any_changed == 'true'
        env:
@@ -69,6 +69,7 @@ jobs:
         context: ./java-sample-application/source-code/shopfront
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}
+        
     - name: Checkout
       uses: actions/checkout@v2
       with:
