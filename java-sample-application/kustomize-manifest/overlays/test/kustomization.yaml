@@ -39,12 +39,12 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: '6255/productcatalouge-image:1f7f267b915fa32d9234c58233482cb5ff505a0e'
+        value: '6255/productcatalouge-image:7f7edd069bf1d498e376780f0c6e33f152816e00'
   - target:
       kind: Deployment
       name: shopfront
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: '6255/shopfront-image:1f7f267b915fa32d9234c58233482cb5ff505a0e'
+        value: '6255/shopfront-image:7f7edd069bf1d498e376780f0c6e33f152816e00'
 
