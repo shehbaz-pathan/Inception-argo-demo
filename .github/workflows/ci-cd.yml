@@ -23,6 +23,14 @@ jobs:
       with:
         files: |
             /java-sample-application/source-code/productcatalogue/**
+    - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+    - name: Build with Maven
+      run: mvn --batch-mode --update-snapshots package
     
     -  name: Build and push productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
@@ -42,6 +50,14 @@ jobs:
       with:
         files: |
             /java-sample-application/source-code/shopfront/**
+    - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          
+    - name: Build with Maven
+      run: mvn --batch-mode --update-snapshots package
     -  name: Build and push shopfront image
      #  if: steps.shopfront.outputs.any_changed == 'true'
        env:
@@ -57,7 +73,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: 'argocd'
-        
+
     -  name: Update Version for productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
        run: |
