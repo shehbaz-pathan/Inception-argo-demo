@@ -4,6 +4,10 @@ kind: Kustomization
 bases:
   - ../../base
 
+resources:
+ - github-secret.yaml
+ - script-config-map.yaml
+ - post-sync-test.yaml
 commonLabels:
   purpose: Inception-demo
   env : test
