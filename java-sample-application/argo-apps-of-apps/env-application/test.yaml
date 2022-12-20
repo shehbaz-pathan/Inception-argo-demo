@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/shehbaz-pathan/Inception-argo-demo.git
-    targetRevision: HEAD
+    targetRevision: argocd
     path: ./java-sample-application/kustomize-manifest/overlays/test
    
   destination:
