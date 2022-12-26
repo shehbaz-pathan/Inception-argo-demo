@@ -3,18 +3,39 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <packaging>jar</packaging>
     <groupId>uk.co.danielbryant.djshopping</groupId>
     <artifactId>productcatalogue</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dropwizard.version>1.3.27</dropwizard.version>
         <guice.version>4.2.3</guice.version>
+        <junit.jupiter.version>5.2.0</junit.jupiter.version>
+        <junit.vintage.version>5.2.0</junit.vintage.version>
+        <sonar.organization>shehbaz-pathan</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
-
+    <distributionManagement>
+            <repository>
+              <id>github</id>
+              <name>inception</name>
+              <url>https://maven.pkg.github.com/shehbaz-pathan/Inception-argo-demo</url>
+            </repository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>github</id>
+        </profile>
+    </profiles>
     <dependencies>
+         <dependency>
+               <groupId>junit</groupId>
+               <artifactId>junit</artifactId>
+               <version>4.13.1</version>
+               <scope>test</scope>
+         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
@@ -73,6 +94,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                     <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
             </plugin>
         </plugins>
     </build>
