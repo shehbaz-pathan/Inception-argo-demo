@@ -202,8 +202,10 @@ jobs:
           
     - name: Run Trivy vulnerability scanner image catalog
       uses: aquasecurity/trivy-action@master
+      env:
+         image-name-productcatalogue: productcatalouge-image
       with:
-        image-ref: 'docker.io/ruchabhange/productcatalouge-image:${{ github.sha }}'
+        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalogue }}:${{ github.sha }}'
         format: 'table'
 #        exit-code: '1'
         ignore-unfixed: true
@@ -211,8 +213,10 @@ jobs:
         severity: 'CRITICAL,HIGH'
     - name: Run Trivy vulnerability scanner for shopfront
       uses: aquasecurity/trivy-action@master
+      env:
+         image-name-shopfront: shopfront-image
       with:
-        image-ref: 'docker.io/ruchabhange/shopfront-image:${{ github.sha }}'
+        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}'
         format: 'template'
 #        exit-code: '1'
         template: '@/contrib/sarif.tpl'
