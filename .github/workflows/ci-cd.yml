@@ -1,19 +1,22 @@
 name: CI and CD
+env:
+ file1: ${{ secrets.FILE_CHANGE_PATH_1 }}
+ file2: ${{ secrets.FILE_CHANGE_PATH_2 }}
 on:
   push:
     branches:
       - master
       - 'feature/**'
     paths:
-      - java-sample-application/source-code/productcatalogue/**
-      - ${{ secrets.FILE_CHANGE_PATH_2 }}
+      - '$file1'
+      - '$file2'
   pull_request:
     branches:
       - master
       - 'feature/**'
     paths:
-      - ${{ secrets.FILE_CHANGE_PATH_1 }}
-      - ${{ secrets.FILE_CHANGE_PATH_2 }}
+      - '$file1'
+      - '$file2'
 jobs:
   compile:
     runs-on: ubuntu-20.04
