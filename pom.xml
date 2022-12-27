@@ -12,7 +12,7 @@
             <repository>
               <id>github</id>
               <name>inception</name>
-              <url>https://maven.pkg.github.com/shehbaz-pathan/Inception-argo-demo</url>
+              <url>https://maven.pkg.github.com/${my_variable}</url>
             </repository>
     </distributionManagement>
     <profiles>
@@ -29,39 +29,4 @@
         <sonar.organization>shehbaz-pathan</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
-    <dependencies>
-         <dependency>
-               <groupId>junit</groupId>
-               <artifactId>junit</artifactId>
-               <version>4.13.1</version>
-               <scope>test</scope>
-         </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                     <testFailureIgnore>true</testFailureIgnore>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M7</version>
-            </plugin>
-        </plugins>
-
-    </build>
-	<reporting>
-     <plugins>
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-surefire-report-plugin</artifactId>
-         <version>3.0.0-M7</version>
-       </plugin>
-     </plugins>
-    </reporting>
 </project>

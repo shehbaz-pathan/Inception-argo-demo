@@ -21,7 +21,7 @@
             <repository>
               <id>github</id>
               <name>inception</name>
-              <url>https://maven.pkg.github.com/shehbaz-pathan/Inception-argo-demo</url>
+              <url>https://maven.pkg.github.com/${my_variable}</url>
             </repository>
     </distributionManagement>
     <profiles>

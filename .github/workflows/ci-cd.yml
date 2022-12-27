@@ -5,15 +5,15 @@ on:
       - master
       - 'feature/**'
     paths:
-      - java-sample-application/source-code/productcatalogue/**
-      - java-sample-application/source-code/shopfront/**
+      - ${{ secrets.FILE_CHANGE_PATH_1 }}
+      - ${{ secrets.FILE_CHANGE_PATH_2 }}
   pull_request:
     branches:
       - master
       - 'feature/**'
     paths:
-      - java-sample-application/source-code/productcatalogue/**
-      - java-sample-application/source-code/shopfront/**
+      - ${{ secrets.FILE_CHANGE_PATH_1 }}
+      - ${{ secrets.FILE_CHANGE_PATH_2 }}
 jobs:
   compile:
     runs-on: ubuntu-20.04
@@ -48,6 +48,7 @@ jobs:
         run: mvn -B compile 
   security:
     runs-on: ubuntu-latest
+    if: contains(fromJson('["pull_request"]'), github.event_name )|| (github.ref == 'refs/heads/master')
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities (Monitor only)
@@ -90,22 +91,18 @@ jobs:
       run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
       id: project
 
-    - name: Generate build number
-      id: buildnumber
-      uses: einaregilsson/build-number@v3 
-      with:
-        token: ${{secrets.github_token}}   
 
     - name: Build project with Maven
       run: | 
-           mvn -B package --file pom.xml 
+           mvn -B package --file pom.xml -Dmy_variable=${GITHUB_REPOSITORY}
            mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false -X
-           mvn deploy  
+           mvn deploy -Dmy_variable=${GITHUB_REPOSITORY}
       env:
 
           GITHUB_USER_REF: ${{ secrets.GIT_USERNAME }}
 
           GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
+
     - name: Test
       run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
     - name: Test Report
@@ -114,7 +111,7 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: JEST Tests            # Name of the check run which will be created
-        path: ./java-sample-application/source-code/shopfront/target/surefire-reports/TEST-*.xml    # Path to test results
+        path: ${{ secrets.TEST_RESULT_PATH }}    # Path to test results
         reporter: java-junit       # Format of test results
         fail-on-error: 'false'
     - name: Read output variables
@@ -124,17 +121,13 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        junit_files: "./java-sample-application/source-code/shopfront/target/surefire-reports/TEST-*.xml"
-    - name: Publish Test Results for productcatalogue
-      uses: EnricoMi/publish-unit-test-result-action@v2
-      if: always()
-      with:
-        junit_files: "./java-sample-application/source-code/productcatalogue/target/surefire-reports/TEST-*.xml"
+        junit_files: "${{ secrets.TEST_RESULT_PATH }} "
+
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=shehbaz-pathan_Inception-argo-demo
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
 
 
     - name: Login to DockerHub
@@ -143,47 +136,47 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     
-    - name: File changes for productcatalouge 
-      id: productcatalouge
-      uses: tj-actions/changed-files@v34
-      with:
-        files: |
-            /java-sample-application/source-code/productcatalogue/**
     
-    -  name: Build and push productcatalouge image
-       #if: steps.productcatalouge.outputs.any_changed == 'true'
-       env:
-         image-name-productcatalogue: productcatalouge-image
+    - name: Build Docker container
+      working-directory: ${{secrets.DOCKER_FILE_PATH_1 }}
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }} .
          
-       id: build-and-push-productcatalouge-image
-       uses: docker/build-push-action@v3
-       with:
-        context: ./java-sample-application/source-code/productcatalogue
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalogue }}:${{ github.sha }}
+    - name: Build Docker container
+      working-directory: ${{secrets.DOCKER_FILE_PATH_2 }}
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }} .
     
-    - name: File changes for shopfront
-      id: shopfront
-      uses: tj-actions/changed-files@v34
+    - name: Run Trivy vulnerability scanner image catalog
+      uses: aquasecurity/trivy-action@master
       with:
-        files: |
-            /java-sample-application/source-code/shopfront/**
-    -  name: Build and push shopfront image
-     #  if: steps.shopfront.outputs.any_changed == 'true'
-       env:
-         image-name-shopfront: shopfront-image
-         
-       id: build-and-push-shopfront-image
-       uses: docker/build-push-action@v3
+        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}'
+        format: 'table'
+#        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+    - name: Run Trivy vulnerability scanner for shopfront
+      uses: aquasecurity/trivy-action@master
        with:
-        context: ./java-sample-application/source-code/shopfront
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}
-    
-    -  name: Checkout
-       uses: actions/checkout@v2
+        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }}'
+        format: 'template'
+#        exit-code: '1'
+        template: '@/contrib/sarif.tpl'
+        output: 'trivy-results.sarif'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+    - name: Upload trivy scan results to github security tab
+      uses: github/codeql-action/upload-sarif@v2
        with:
-        ref: 'argocd'
+        sarif_file: 'trivy-results.sarif'
+
+    - name: Docker push
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }}
+
         
     -  name: Update Version for productcatalouge image
        #if: steps.productcatalouge.outputs.any_changed == 'true'
@@ -206,31 +199,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: Image version updated
           
-    - name: Run Trivy vulnerability scanner image catalog
-      uses: aquasecurity/trivy-action@master
-      env:
-         image-name-productcatalogue: productcatalouge-image
-      with:
-        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-productcatalogue }}:${{ github.sha }}'
-        format: 'table'
-#        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
-    - name: Run Trivy vulnerability scanner for shopfront
-      uses: aquasecurity/trivy-action@master
-      env:
-         image-name-shopfront: shopfront-image
-      with:
-        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ env.image-name-shopfront }}:${{ github.sha }}'
-        format: 'template'
-#        exit-code: '1'
-        template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
-    - name: Upload trivy scan results to github security tab
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: 'trivy-results.sarif'
