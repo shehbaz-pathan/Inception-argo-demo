@@ -126,7 +126,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        junit_files: "${{ secrets.TEST_RESULT_PATH }} "
+        junit_files: "${{ secrets.TEST_RESULT_PATH }}"
 
     - name: Build and analyze
       env:
