@@ -4,10 +4,16 @@ on:
     branches:
       - master
       - 'feature/**'
+    paths:
+      - java-sample-application/source-code/productcatalogue/**
+      - java-sample-application/source-code/shopfront/**
   pull_request:
     branches:
       - master
       - 'feature/**'
+    paths:
+      - java-sample-application/source-code/productcatalogue/**
+      - java-sample-application/source-code/shopfront/**
 jobs:
   compile:
     runs-on: ubuntu-20.04
