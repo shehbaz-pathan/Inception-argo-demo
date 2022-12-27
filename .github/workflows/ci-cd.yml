@@ -91,7 +91,12 @@ jobs:
       run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
       id: project
 
-
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v3 
+      with:
+        token: ${{secrets.github_token}}   
+        
     - name: Build project with Maven
       run: | 
            mvn -B package --file pom.xml -Dmy_variable=${GITHUB_REPOSITORY}
