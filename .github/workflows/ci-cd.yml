@@ -8,15 +8,15 @@ on:
       - master
       - 'feature/**'
     paths:
-      - '$file1'
-      - '$file2'
+      - ${{ env.file1 }}
+      - ${{ env.file2 }}
   pull_request:
     branches:
       - master
       - 'feature/**'
     paths:
-      - '$file1'
-      - '$file2'
+      - ${{ env.file1 }}
+      - ${{ env.file2 }}
 jobs:
   compile:
     runs-on: ubuntu-20.04
