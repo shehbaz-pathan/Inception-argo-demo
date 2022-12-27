@@ -4,16 +4,16 @@ on:
     branches:
       - master
       - 'feature/**'
-    #paths:
-    #  - ${{ secrets.FILE_CHANGE_PATH_1 }}
-    #  - ${{ secrets.FILE_CHANGE_PATH_2 }}
+    paths:
+      - ${{ secrets.FILE_CHANGE_PATH_1 }}
+      - ${{ secrets.FILE_CHANGE_PATH_2 }}
   pull_request:
     branches:
       - master
       - 'feature/**'
-    #paths:
-    #  - ${{ secrets.FILE_CHANGE_PATH_1 }}
-    #  - ${{ secrets.FILE_CHANGE_PATH_2 }}
+    paths:
+      - ${{ secrets.FILE_CHANGE_PATH_1 }}
+      - ${{ secrets.FILE_CHANGE_PATH_2 }}
 jobs:
   compile:
     runs-on: ubuntu-20.04
@@ -177,25 +177,29 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }}
 
-        
-    -  name: Update Version for productcatalouge image
-       #if: steps.productcatalouge.outputs.any_changed == 'true'
-       run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-          echo "$version for test enviornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
-    
-    -  name: Update Version for shopfront image
-       #if: steps.shopfront.outputs.any_changed == 'true'
-       run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-          echo "$version for test enviornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
-    -  name: Commit and push changes
-       uses: devops-infra/action-commit-push@v0.3
-       with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Image version updated
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: 'argocd'
+
+    - name: Update Version for productcatalouge image
+      #if: steps.productcatalouge.outputs.any_changed == 'true'
+      run: |
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+         echo "$version for test enviornment"
+         sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+         cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
+  
+    - name: Update Version for shopfront image
+      #if: steps.shopfront.outputs.any_changed == 'true'
+      run: |
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+         echo "$version for test enviornment"
+         sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+         cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
+    - name: Commit and push changes
+      uses: devops-infra/action-commit-push@v0.3
+      with:
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         commit_message: Image version updated
           
