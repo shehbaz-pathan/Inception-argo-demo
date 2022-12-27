@@ -5,7 +5,7 @@ on:
       - master
       - 'feature/**'
     paths:
-      - ${{ secrets.FILE_CHANGE_PATH_1 }}
+      - java-sample-application/source-code/productcatalogue/**
       - ${{ secrets.FILE_CHANGE_PATH_2 }}
   pull_request:
     branches:
