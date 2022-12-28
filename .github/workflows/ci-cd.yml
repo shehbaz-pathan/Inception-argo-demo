@@ -207,4 +207,16 @@ jobs:
       with:
          github_token: ${{ secrets.GITHUB_TOKEN }}
          commit_message: Image version updated
+    
+    - name: release
+      if: (github.ref == 'refs/heads/master')
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: ${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }}
+        tag_name: "${{ github.ref }}-release"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
           
