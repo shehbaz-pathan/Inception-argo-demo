@@ -191,14 +191,8 @@ jobs:
       with:
         ref: 'argocd'
 
-    - name: checkout composite action
-      uses: actions/checkout@v3
-      with:
-        repository: infracloudio/github-shared-workflows
-        path: ./github-shared-workflows
-
     - name: docker image updater 
-      uses: ./github-sharedshared-workflows/.github/actions/docker-image-updater/
+      uses: ./.github/actions
       with:
           destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
   
