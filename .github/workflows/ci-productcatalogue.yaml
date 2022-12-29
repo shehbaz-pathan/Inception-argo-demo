@@ -5,15 +5,13 @@ on:
       - master
       - 'feature/**'
     paths:
-  #    - java-sample-application/source-code/productcatalogue/**
-      - java-sample-application/source-code/shopfront/**
+      - java-sample-application/source-code/productcatalogue/**
   pull_request:
     branches:
       - master
       - 'feature/**'
     paths:
-  #    - java-sample-application/source-code/productcatalogue/**
-      - java-sample-application/source-code/shopfront/**
+      - java-sample-application/source-code/productcatalogue/**
 jobs:
   compile:
     runs-on: ubuntu-20.04
@@ -109,23 +107,6 @@ jobs:
 
     - name: Test
       run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
-    - name: Test Report
-      uses: phoenix-actions/test-reporting@v8
-      id: test-report 
-      if: success() || failure()    # run this step even if previous step failed
-      with:
-        name: JEST Tests            # Name of the check run which will be created
-        path: ${{ secrets.TEST_RESULT_PATH }}    # Path to test results
-        reporter: java-junit       # Format of test results
-        fail-on-error: 'false'
-    - name: Read output variables
-      run: |
-         echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
-    - name: Publish Test Results for shopfront
-      uses: EnricoMi/publish-unit-test-result-action@v2
-      if: always()
-      with:
-        junit_files: "${{ secrets.TEST_RESULT_PATH }}"
 
     - name: Build and analyze
       env:
@@ -151,21 +132,20 @@ jobs:
     
     
     - name: Build Docker container
-      working-directory: ${{secrets.DOCKER_FILE_PATH_2 }}
+      working-directory: ${{secrets.DOCKER_FILE_PATH_1 }}
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }} .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }} .
     
-    - name: Run Trivy vulnerability scanner for shopfront
+    - name: Run Trivy vulnerability scanner image catalog
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }}'
-        format: 'template'
+        image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}'
+        format: 'table'
 #        exit-code: '1'
-        template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
+
     - name: Upload trivy scan results to github security tab
       uses: github/codeql-action/upload-sarif@v2
       with:
@@ -173,28 +153,29 @@ jobs:
 
     - name: Docker push
       run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_2 }}:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}
 
     - name: Checkout
       uses: actions/checkout@v2
       with:
         ref: 'argocd'
 
-  #  - name: Update Version for productcatalouge image
-  #    #if: steps.productcatalouge.outputs.any_changed == 'true'
-  #    run: |
-  #       version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-  #       echo "$version for test enviornment"
-  #       sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-  #       cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
-  
-    - name: Update Version for shopfront image
-      #if: steps.shopfront.outputs.any_changed == 'true'
+    - name: Update Version for productcatalouge image
+      #if: steps.productcatalouge.outputs.any_changed == 'true'
       run: |
-         version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+         version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
          echo "$version for test enviornment"
          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-         cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
+         cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
+  
+  #  - name: Update Version for shopfront image
+  #    #if: steps.shopfront.outputs.any_changed == 'true'
+  #    run: |
+  #       version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+  #       echo "$version for test enviornment"
+  #       sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+  #       cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
+
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
       with:
@@ -209,7 +190,7 @@ jobs:
         draft: false
         prerelease: false
         release_name: ${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }}
-        tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_2 }}:${{ steps.buildnumber.outputs.build_number }}"
+        tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_1 }}:${{ steps.buildnumber.outputs.build_number }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
           
