@@ -209,7 +209,7 @@ jobs:
         draft: false
         prerelease: false
         release_name: ${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }}
-        tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_2 }}:${{ steps.buildnumber.outputs.build_number }}"
+        tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_2 }}-${{ steps.buildnumber.outputs.build_number }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
           
