@@ -192,7 +192,7 @@ jobs:
         ref: 'argocd'
 
     - name: docker image updater 
-      uses: ./.github/workflows/docker-image-updater.yaml
+      uses: ./.github/workflows/docker-image-updater.yaml@master
       with:
           destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
   
