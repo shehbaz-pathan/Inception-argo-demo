@@ -101,7 +101,6 @@ jobs:
       run: | 
            mvn -B package --file pom.xml -Dmy_variable=${GITHUB_REPOSITORY}
            mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false -X
-           mvn deploy -Dmy_variable=${GITHUB_REPOSITORY}
       env:
 
           GITHUB_USER_REF: ${{ secrets.GIT_USERNAME }}
@@ -132,8 +131,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.qualitygate.wait=true -Pcoverage
 
+    - name: Publish package on Github packages
+      run: | 
+           mvn deploy -Dmy_variable=${GITHUB_REPOSITORY}
+           mvn versions:revert
+      env:
+          
+          GITHUB_USER_REF: ${{ secrets.GIT_USERNAME }}
+
+          GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
 
     - name: Login to DockerHub
       uses: docker/login-action@v2
@@ -216,7 +224,7 @@ jobs:
         draft: false
         prerelease: false
         release_name: ${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }}
-        tag_name: "${{ github.ref }}-release"
+        tag_name: "${{ github.ref }}-${{ steps.buildnumber.outputs.build_number }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
           
