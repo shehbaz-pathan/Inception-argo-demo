@@ -194,6 +194,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
   docker-image-updtaer:
+    needs: [build_and_test]
     uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
     with:
       env: test
