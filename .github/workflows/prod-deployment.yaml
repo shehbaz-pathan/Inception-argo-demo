@@ -7,6 +7,7 @@ jobs:
       env: prod
       destination-file: ./java-sample-application/kustomize-manifest/overlays/stage/kustomization.yaml
  creating-production-pull-request:
+   needs: [docker-image-updtaer]
    runs-on: ubuntu-latest
    steps:
      - name: pull-request
