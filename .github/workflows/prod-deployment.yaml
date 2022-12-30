@@ -5,7 +5,7 @@ jobs:
     uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
     with:
       env: prod
-      destination-file: ./java-sample-application/kustomize-manifest/overlays/stage/kustomization.yaml
+      destination-file: ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
  creating-production-pull-request:
    needs: [docker-image-updtaer]
    runs-on: ubuntu-latest
