@@ -16,9 +16,9 @@ jobs:
           ref: 'argocd'
       - name: Docker-Image-Updater
         run: |
-         version=$(cat ${{ input.destination-file }} | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-         sed -i "s/$version/${{ github.sha }}/" ${{ input.destination-file }}
-         cat ${{ input.destination-file }} | grep productcatalouge-image: | awk '{print $2}'
+         version=$(cat ${{ inputs.destination-file }} | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
+         sed -i "s/$version/${{ github.sha }}/" ${{ inputs.destination-file }}
+         cat ${{ inputs.destination-file }} | grep productcatalouge-image: | awk '{print $2}'
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@v0.3
         with:
