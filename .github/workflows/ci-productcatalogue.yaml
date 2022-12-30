@@ -190,6 +190,7 @@ jobs:
     needs: [compile,security,build_and_test,docker-image-updtaer]
     if: always()
     name: Slack Notification
+    runs-on: ubuntu-latest
     steps:
     - name: Slack Notification success
       if: success()
