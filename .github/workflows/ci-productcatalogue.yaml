@@ -190,11 +190,8 @@ jobs:
       with:
         ref: 'argocd'
   
-    - name: docker image updater 
-      uses: ./.github/workflows/docker-image-updater.yaml@master
-      with:
-          destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
   
+          
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
       with:
