@@ -183,14 +183,7 @@ jobs:
          echo "$version for test enviornment"
          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
          cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
-  
-  #  - name: Update Version for shopfront image
-  #    #if: steps.shopfront.outputs.any_changed == 'true'
-  #    run: |
-  #       version=$(cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-  #       echo "$version for test enviornment"
-  #       sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-  #       cat ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
+
 
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
