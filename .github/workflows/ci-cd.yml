@@ -189,7 +189,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: 'argocd'
-
+  
     - name: docker image updater 
       uses: ./.github/workflows/docker-image-updater.yaml@master
       with:
