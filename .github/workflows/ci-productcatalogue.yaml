@@ -197,9 +197,9 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: 'argocd'
-        
+    
     - name: update docker image
-      uses: ./.github/workflows/docker-image-updater.yaml@master
+      uses: ./docker-image-updater.yaml@master
       with:
           destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
      
