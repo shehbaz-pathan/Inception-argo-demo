@@ -39,7 +39,7 @@ jobs:
         uses: snyk/actions/maven@master
         continue-on-error: true
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN_ }}
         with:
           command: monitor
       - name: Run Snyk to check for vulnerabilities (test)
@@ -178,14 +178,34 @@ jobs:
         tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_1 }}-${{ steps.buildnumber.outputs.build_number }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
-
+  
   docker-image-updtaer:
     needs: [build_and_test]
     uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
     with:
       env: test
       destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-     
+
+  slackNotification:
+    needs: [compile,security,build_and_test,docker-image-updtaer]
+    if: always()
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification success
+      if: success()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: 'Success'
+    - name: Slack Notification Failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: 'Failure'
+         
    
      
   
