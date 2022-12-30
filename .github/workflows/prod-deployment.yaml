@@ -1,39 +1,16 @@
 name: Prod Deployment
 on: [workflow_dispatch]
 jobs:
-   build:
-    name: Deploying image to prod env
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: 'argocd'
-    - name: Create release branch
-      run: git checkout -b production-deployment
-      
-    - name: Update Version for productcatalouge image
-      run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-          echo "$version for prod enviornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep productcatalouge-image: | awk '{print $2}' 
-    
-    - name: Update Version for shopfront image
-      run: |
-          version=$(cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
-          echo "$version for prod enviornment"
-          sed -i "s/$version/${{ github.sha }}/" ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml
-          cat ./java-sample-application/kustomize-manifest/overlays/prod/kustomization.yaml | grep shopfront-image:: | awk '{print $2}' 
-    - name: Commit and push changes
-      uses: devops-infra/action-commit-push@v0.3
-      with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Image version updated
-
-    - name: pull-request
-      uses: repo-sync/pull-request@v2
-      with:
+ docker-image-updtaer:
+    uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
+    with:
+      destination-file: ./java-sample-application/kustomize-manifest/overlays/stage/kustomization.yaml
+ creating-production-pull-request:
+   runs-on: ubuntu-latest
+   steps:
+     - name: pull-request
+       uses: repo-sync/pull-request@v2
+       with:
           source_branch: "production-deployment"
           destination_branch: "argocd"
           github_token: ${{ secrets.GITHUB_TOKEN }}
