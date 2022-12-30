@@ -25,6 +25,6 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: '6255/productcatalouge-image:aa77e7f08c8ae172dc68e52fc4c6c18fd14024fc'
+        value: '6255/productcatalouge-image:628275162c0821b8edb11262e70e28334f433c52'
   
 
