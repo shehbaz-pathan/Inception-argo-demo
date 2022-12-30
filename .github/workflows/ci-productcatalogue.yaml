@@ -190,9 +190,7 @@ jobs:
     needs: [compile,security,build_and_test,docker-image-updtaer]
     if: always()
     name: Slack Notification
-    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Slack Notification success
       if: success()
       uses: rtCamp/action-slack-notify@v2
