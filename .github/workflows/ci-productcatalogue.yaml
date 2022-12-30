@@ -33,7 +33,7 @@ jobs:
   security:
     needs: [compile]
     runs-on: ubuntu-latest
-  #  if: contains(fromJson('["pull_request"]'), github.event_name )
+    if: contains(fromJson('["pull_request"]'), github.event_name )
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities (Monitor only)
@@ -51,7 +51,7 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
   build_and_test:
-    needs: [security]
+    needs: [compile]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -81,7 +81,7 @@ jobs:
       id: buildnumber
       uses: einaregilsson/build-number@v3 
       with:
-        token: ${{secrets.github_token_}}   
+        token: ${{secrets.github_token}}   
         
     - name: Build project with Maven
       run: | 
@@ -193,14 +193,15 @@ jobs:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
+    - uses: technote-space/workflow-conclusion-action@v3
     - name: Slack Notification success
-      if: success()
+      if: env.WORKFLOW_CONCLUSION == 'success'
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: 'Success'
     - name: Slack Notification Failure
-      if: failure()
+      if: env.WORKFLOW_CONCLUSION == 'failure'
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
