@@ -31,6 +31,7 @@ jobs:
       - name: Compile the Project
         run: mvn -B compile 
   security:
+    needs: [compile]
     runs-on: ubuntu-latest
   #  if: contains(fromJson('["pull_request"]'), github.event_name )
     steps:
@@ -50,6 +51,7 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
   build_and_test:
+    needs: [security]
     runs-on: ubuntu-latest
     needs: compile
     steps:
