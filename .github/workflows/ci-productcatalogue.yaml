@@ -112,7 +112,7 @@ jobs:
       if: contains(fromJson('["pull_request"]'), github.event_name ))
       uses: phoenix-actions/test-reporting@v8
       id: test-report 
-      if: success() || failure()    # run this step even if previous step failed
+     # if: success() || failure()    # run this step even if previous step failed
       with:
         name: JEST Tests            # Name of the check run which will be created
         path: ${{ secrets.TEST_RESULT_PATH }}    # Path to test results
@@ -124,7 +124,7 @@ jobs:
     - name: Publish Test Results for shopfront
       if: contains(fromJson('["pull_request"]'), github.event_name ))
       uses: EnricoMi/publish-unit-test-result-action@v2
-      if: always()
+    #  if: always()
       with:
         junit_files: "${{ secrets.TEST_RESULT_PATH }}"
 

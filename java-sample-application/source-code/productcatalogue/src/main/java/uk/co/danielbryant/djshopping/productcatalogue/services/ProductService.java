@@ -23,7 +23,6 @@ public class ProductService {
         fakeProductDAO.put("10", new Product("10", "Fakeeeetool", "Faketool", new BigDecimal(154.10)));      
 
 
-        
 }
 
     public List<Product> getAllProducts() {
