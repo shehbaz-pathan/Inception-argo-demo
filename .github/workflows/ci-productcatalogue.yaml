@@ -193,18 +193,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: 'argocd'
-    
-    - name: update docker image
-      uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
-      with:
-          destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+  docker-image-updtaer:
+    uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
+    with:
+      destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+
+   
      
-    - name: Commit and push changes
-      uses: devops-infra/action-commit-push@v0.3
-      with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-         commit_message: Image version updated
+  
