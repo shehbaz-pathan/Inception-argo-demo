@@ -20,20 +20,6 @@ jobs:
         java: [11]
     name: Java ${{ matrix.java }} compile
     steps:
-      - name: Get branch name
-        id: branch-name
-        uses: tj-actions/branch-names@v6
-      - name: Running on the default branch.
-        if: steps.branch-name.outputs.is_default == 'true'
-        run: |
-          echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
-        # Outputs: "Running on default: master".
-      
-      - name: Running on a pull request branch.
-        if: steps.branch-name.outputs.is_default == 'false'
-        run: |
-          echo "Running on pr: ${{ steps.branch-name.outputs.current_branch }}"
-        # Outputs: "Running on pr: feature/test".
       - name: Checkout Source Code
         uses: actions/checkout@v2
       - name: Setup Java
@@ -46,7 +32,7 @@ jobs:
         run: mvn -B compile 
   security:
     runs-on: ubuntu-latest
-    if: contains(fromJson('["pull_request"]'), github.event_name )
+  #  if: contains(fromJson('["pull_request"]'), github.event_name )
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities (Monitor only)
@@ -84,7 +70,7 @@ jobs:
 
         server-password: GITHUB_TOKEN_REF
     - name: Check working directory
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       run: echo "${GITHUB_WORKSPACE}"
     - name: Extract Maven project version
       run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
@@ -106,10 +92,10 @@ jobs:
           GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
 
     - name: Test
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
     - name: Test Report
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       uses: phoenix-actions/test-reporting@v8
       id: test-report 
      # if: success() || failure()    # run this step even if previous step failed
@@ -122,21 +108,21 @@ jobs:
       run: |
          echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
     - name: Publish Test Results for shopfront
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       uses: EnricoMi/publish-unit-test-result-action@v2
     #  if: always()
       with:
         junit_files: "${{ secrets.TEST_RESULT_PATH }}"
 
     - name: Build and analyze
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.qualitygate.wait=true -Pcoverage
 
     - name: Publish package on Github packages
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       run: | 
            mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false -X
            mvn deploy -Dmy_variable=${GITHUB_REPOSITORY}
@@ -160,7 +146,7 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }} .
     
     - name: Run Trivy vulnerability scanner for product
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}'
@@ -172,7 +158,7 @@ jobs:
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
     - name: Upload trivy scan results to github security tab
-      if: contains(fromJson('["pull_request"]'), github.event_name )
+    #  if: contains(fromJson('["pull_request"]'), github.event_name )
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: 'trivy-results.sarif'
