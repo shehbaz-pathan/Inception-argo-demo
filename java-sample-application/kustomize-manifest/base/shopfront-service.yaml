@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: shopfront
-        image: ruchabhange/shopfront:latest
+        image: 6255/shopfront-image:1e9082dabba61429bf734b3d1ace00320fda846b
         ports:
         - containerPort: 8010
         livenessProbe:
