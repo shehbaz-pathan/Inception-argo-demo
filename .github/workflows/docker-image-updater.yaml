@@ -10,8 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:        
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: 'argocd'
       - name: Docker-Image-Updater
         run: |
          version=$(cat ${{ input.destination-file }} | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
          sed -i "s/$version/${{ github.sha }}/" ${{ input.destination-file }}
          cat ${{ input.destination-file }} | grep productcatalouge-image: | awk '{print $2}'
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@v0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Image version updated
