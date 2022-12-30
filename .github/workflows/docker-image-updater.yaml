@@ -18,7 +18,7 @@ jobs:
         with:
           ref: 'argocd'
       - name: branch for prod pr
-        if: ${{ inputs.env }} == 'prod'
+        if: inputs.env  == 'prod'
         run: git checkout -b production-deployment && echo ${{ inputs.env }}
       - name: Docker-Image-Updater
         run: |
