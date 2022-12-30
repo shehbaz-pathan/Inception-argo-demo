@@ -81,7 +81,7 @@ jobs:
       id: buildnumber
       uses: einaregilsson/build-number@v3 
       with:
-        token: ${{secrets.github_token__}}   
+        token: ${{secrets.github_token}}   
         
     - name: Build project with Maven
       run: | 
