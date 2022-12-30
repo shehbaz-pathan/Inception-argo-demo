@@ -199,7 +199,7 @@ jobs:
         ref: 'argocd'
     
     - name: update docker image
-      uses: ./docker-image-updater.yaml@master
+      uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
       with:
           destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
      
