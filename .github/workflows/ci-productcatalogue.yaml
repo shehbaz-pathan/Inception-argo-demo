@@ -199,8 +199,7 @@ jobs:
     with:
       env: test
       destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
-      github-sha: ${{ github.sha }}
-
+     
    
      
   
