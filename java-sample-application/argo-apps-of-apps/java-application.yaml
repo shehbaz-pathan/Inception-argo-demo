@@ -6,8 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ruchabhange/Inception-argo-demo.git
-    targetRevision: HEAD
+    repoURL: https://github.com/shehbaz-pathan/Inception-argo-demo.git
+    targetRevision: argocd
     path: ./java-sample-application/argo-apps-of-apps/env-application/
   destination:
     server: https://kubernetes.default.svc
