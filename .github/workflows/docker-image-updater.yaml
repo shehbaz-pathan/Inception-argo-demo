@@ -19,7 +19,7 @@ jobs:
          ref: 'argocd'
       - name: branch for prod pr
         if: inputs.env  == 'prod'
-        run: git checkout -b java-application/production-deployment && echo ${{ inputs.env }}
+        run: git checkout -b production-deployment && echo ${{ inputs.env }}
       - name: Docker-Image-Updater
         run: |
          version=$(cat ${{ inputs.destination-file }} | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
