@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:        
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          ref: 'argocd'
+          repository: ${{ secrets.ARGOCD_REPO }}
+          token: ${{ secrets.ARGOCD_GH_TOKEN }}
       - name: branch for prod pr
         if: inputs.env  == 'prod'
-        run: git checkout -b production-deployment && echo ${{ inputs.env }}
+        run: git checkout -b java-application/production-deployment && echo ${{ inputs.env }}
       - name: Docker-Image-Updater
         run: |
          version=$(cat ${{ inputs.destination-file }} | grep productcatalouge-image: | awk '{print $2}' | cut -d ':' -f 2 | rev | cut -c2- | rev)
@@ -28,5 +29,5 @@ jobs:
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@v0.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ARGOCD_GH_TOKEN }}
           commit_message: Image version updated
