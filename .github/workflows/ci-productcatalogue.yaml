@@ -185,7 +185,7 @@ jobs:
     uses: shehbaz-pathan/Inception-argo-demo/.github/workflows/docker-image-updater.yaml@master
     with:
       env: test
-      destination-file: ./applications/java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
+      destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
 
   slackNotification:
     needs: [compile,security,build_and_test,docker-image-updtaer]
