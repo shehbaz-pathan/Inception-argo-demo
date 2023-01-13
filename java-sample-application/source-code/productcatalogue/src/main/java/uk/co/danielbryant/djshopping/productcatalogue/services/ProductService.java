@@ -20,7 +20,7 @@ public class ProductService {
         fakeProductDAO.put("7", new Product("7", "Oldtool", "Oldtool", new BigDecimal(154.10)));  
         fakeProductDAO.put("8", new Product("8", "Nexttool456", "Nexttool", new BigDecimal(154.10)));
         fakeProductDAO.put("9", new Product("9", "Cooltool123", "Cooltool", new BigDecimal(154.10)));
-        fakeProductDAO.put("10", new Product("10", "Caketool", "Caketool", new BigDecimal(154.10)));      
+        fakeProductDAO.put("10", new Product("10", "Cakeeeetool", "Cakeeeeetool", new BigDecimal(154.10)));      
 
 }
 
