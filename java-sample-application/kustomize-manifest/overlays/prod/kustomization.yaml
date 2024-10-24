@@ -10,7 +10,7 @@ commonLabels:
 
 replicas:
  - name: productcatalogue
-   count: 3
+   count: 1
  - name: shopfront
    count: 1
 
