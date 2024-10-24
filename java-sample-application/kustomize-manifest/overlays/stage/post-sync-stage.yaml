@@ -14,7 +14,7 @@ spec:
        containers:
           - name: postsycn-test
             image: 6255/curl:1.0
-            command: ["sh","/script/status_test.sh"]
+            command: ["bash","/script/status_test.sh"]
             env:
               - name: GITHUB_TOKEN
                 valueFrom:
