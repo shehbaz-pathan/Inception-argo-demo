@@ -14,9 +14,9 @@ commonLabels:
 
 replicas:
  - name: productcatalogue
-   count: 2 
- - name: shopfront
    count: 2
+ - name: shopfront
+   count: 1
 
 patches:
   - target:

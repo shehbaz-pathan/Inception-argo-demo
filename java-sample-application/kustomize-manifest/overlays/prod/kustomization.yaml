@@ -12,7 +12,7 @@ replicas:
  - name: productcatalogue
    count: 3
  - name: shopfront
-   count: 3
+   count: 1
 
 patches:
 #  - target:
