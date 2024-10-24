@@ -13,7 +13,7 @@ spec:
        restartPolicy: OnFailure
        containers:
           - name: postsycn-test
-            image: curlimages/curl
+            image: 6255/curl:1.0
             command: ["bash","/script/status_test.sh"]
             env:
               - name: GITHUB_TOKEN
