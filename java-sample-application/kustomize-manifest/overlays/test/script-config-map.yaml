@@ -6,6 +6,7 @@ data:
   status_test.sh: |+
       #!/bin/bash
       echo "Running post deployment checks...."
+      echo $GITHUB_TOKEN
       sleep 60
       productcatalog_status_code=$(curl http:/productcatalogue:8020/products -s -o /dev/null -w %{http_code})
       shopfront_status_code=$(curl http://shopfront:8010/ -s -o /dev/null -w %{http_code})
