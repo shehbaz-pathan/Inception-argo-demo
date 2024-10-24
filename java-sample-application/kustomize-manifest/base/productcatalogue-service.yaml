@@ -16,11 +16,10 @@ spec:
 
 ---
 apiVersion: apps/v1
-kind: Rollout
+kind: Deployment
 metadata:
   name: productcatalogue
 spec:
-  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: productcatalogue
@@ -41,12 +40,4 @@ spec:
             port: 8025
           initialDelaySeconds: 30
           timeoutSeconds: 1
-  strategy:
-    canary:
-      steps:
-      - setWeight: 30
-      - pause:
-          duration: 1m
-      - setWeight: 60
-      - pause:
-          duration: 1m
+  
