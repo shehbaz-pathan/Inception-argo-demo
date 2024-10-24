@@ -30,26 +30,26 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Compile the Project
         run: mvn -B compile 
-  security:
-    needs: [compile]
-    runs-on: ubuntu-latest
-    if: contains(fromJson('["pull_request"]'), github.event_name )
-    steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities (Monitor only)
-        uses: snyk/actions/maven@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-      - name: Run Snyk to check for vulnerabilities (test)
-        uses: snyk/actions/maven@master
-        continue-on-error: true # To make sure that SARIF upload gets called
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --sarif-file-output=snyk.sarif
+  # security:
+  #   needs: [compile]
+  #   runs-on: ubuntu-latest
+  #   if: contains(fromJson('["pull_request"]'), github.event_name )
+  #   steps:
+  #     - uses: actions/checkout@master
+  #     - name: Run Snyk to check for vulnerabilities (Monitor only)
+  #       uses: snyk/actions/maven@master
+  #       continue-on-error: true
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:
+  #         command: monitor
+  #     - name: Run Snyk to check for vulnerabilities (test)
+  #       uses: snyk/actions/maven@master
+  #       continue-on-error: true # To make sure that SARIF upload gets called
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:
+  #         args: --sarif-file-output=snyk.sarif
   build_and_test:
     needs: [compile]
     runs-on: ubuntu-latest
@@ -92,47 +92,47 @@ jobs:
 
           GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
 
-    - name: Test
-    #  if: contains(fromJson('["pull_request"]'), github.event_name )
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
-    - name: Test Report
-    #  if: contains(fromJson('["pull_request"]'), github.event_name )
-      uses: phoenix-actions/test-reporting@v8
-      id: test-report 
-     # if: success() || failure()    # run this step even if previous step failed
-      with:
-        name: JEST Tests            # Name of the check run which will be created
-        path: ${{ secrets.TEST_RESULT_PATH }}    # Path to test results
-        reporter: java-junit       # Format of test results
-        fail-on-error: 'false'
-    - name: Read output variables
-      run: |
-         echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
-    - name: Publish Test Results for shopfront
-    #  if: contains(fromJson('["pull_request"]'), github.event_name )
-      uses: EnricoMi/publish-unit-test-result-action@v2
-    #  if: always()
-      with:
-        junit_files: "${{ secrets.TEST_RESULT_PATH }}"
+    # - name: Test
+    # #  if: contains(fromJson('["pull_request"]'), github.event_name )
+    #   run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+    # - name: Test Report
+    # #  if: contains(fromJson('["pull_request"]'), github.event_name )
+    #   uses: phoenix-actions/test-reporting@v8
+    #   id: test-report 
+    #  # if: success() || failure()    # run this step even if previous step failed
+    #   with:
+    #     name: JEST Tests            # Name of the check run which will be created
+    #     path: ${{ secrets.TEST_RESULT_PATH }}    # Path to test results
+    #     reporter: java-junit       # Format of test results
+    #     fail-on-error: 'false'
+    # - name: Read output variables
+    #   run: |
+    #      echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
+    # - name: Publish Test Results for shopfront
+    # #  if: contains(fromJson('["pull_request"]'), github.event_name )
+    #   uses: EnricoMi/publish-unit-test-result-action@v2
+    # #  if: always()
+    #   with:
+    #     junit_files: "${{ secrets.TEST_RESULT_PATH }}"
 
-    - name: Build and analyze
-    #  if: contains(fromJson('["pull_request"]'), github.event_name )
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.qualitygate.wait=true -Pcoverage
+    # - name: Build and analyze
+    # #  if: contains(fromJson('["pull_request"]'), github.event_name )
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.qualitygate.wait=true -Pcoverage
 
-    - name: Publish package on Github packages
-    #  if: contains(fromJson('["pull_request"]'), github.event_name )
-      run: | 
-           mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false -X
-           mvn deploy -Dmy_variable=${GITHUB_REPOSITORY}
-           mvn versions:revert
-      env:
+    # - name: Publish package on Github packages
+    # #  if: contains(fromJson('["pull_request"]'), github.event_name )
+    #   run: | 
+    #        mvn -B versions:set -DnewVersion=${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }} -DgenerateBackupPoms=false -X
+    #        mvn deploy -Dmy_variable=${GITHUB_REPOSITORY}
+    #        mvn versions:revert
+    #   env:
           
-          GITHUB_USER_REF: ${{ secrets.GIT_USERNAME }}
+    #       GITHUB_USER_REF: ${{ secrets.GIT_USERNAME }}
 
-          GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
+    #       GITHUB_TOKEN_REF: ${{ secrets.GIT_TOKEN }}
 
     - name: Login to DockerHub
       uses: docker/login-action@v2
@@ -168,17 +168,17 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME_1 }}:${{ github.sha }}
     
-    - name: release
-      if: (github.ref == 'refs/heads/master')
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: false
-        prerelease: false
-        release_name: ${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }}
-        tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_1 }}-${{ steps.buildnumber.outputs.build_number }}"
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+    # - name: release
+    #   if: (github.ref == 'refs/heads/master')
+    #   uses: actions/create-release@v1
+    #   id: create_release
+    #   with:
+    #     draft: false
+    #     prerelease: false
+    #     release_name: ${{ steps.project.outputs.version }}.${{ steps.buildnumber.outputs.build_number }}
+    #     tag_name: "${{ github.ref }}-${{ secrets.IMAGE_NAME_1 }}-${{ steps.buildnumber.outputs.build_number }}"
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
   
   docker-image-updtaer:
     needs: [build_and_test]
@@ -187,26 +187,22 @@ jobs:
       env: test
       destination-file: ./java-sample-application/kustomize-manifest/overlays/test/kustomization.yaml
 
-  slackNotification:
-    needs: [compile,security,build_and_test,docker-image-updtaer]
-    if: always()
-    name: Slack Notification
-    runs-on: ubuntu-latest
-    steps:
-    - uses: technote-space/workflow-conclusion-action@v3
-    - name: Slack Notification success
-      if: env.WORKFLOW_CONCLUSION == 'success'
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: 'Success'
-    - name: Slack Notification Failure
-      if: env.WORKFLOW_CONCLUSION == 'failure'
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: 'Failure'
-         
-   
-     
-  
+  # slackNotification:
+  #   needs: [compile,security,build_and_test,docker-image-updtaer]
+  #   if: always()
+  #   name: Slack Notification
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: technote-space/workflow-conclusion-action@v3
+  #   - name: Slack Notification success
+  #     if: env.WORKFLOW_CONCLUSION == 'success'
+  #     uses: rtCamp/action-slack-notify@v2
+  #     env:
+  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #       SLACK_MESSAGE: 'Success'
+  #   - name: Slack Notification Failure
+  #     if: env.WORKFLOW_CONCLUSION == 'failure'
+  #     uses: rtCamp/action-slack-notify@v2
+  #     env:
+  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #       SLACK_MESSAGE: 'Failure'
