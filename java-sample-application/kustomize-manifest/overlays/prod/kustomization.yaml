@@ -30,7 +30,7 @@ patches:
 #        path: /spec/ports/0/port
 #        value: 8030
   - target:
-      kind: Rollout
+      kind: Deployment
       name: productcatalogue
     patch: |-
       - op: replace
