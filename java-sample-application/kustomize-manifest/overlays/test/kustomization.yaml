@@ -20,7 +20,7 @@ replicas:
 
 patches:
   - target:
-      kind: Deployment
+      kind: Rollout
       name: productcatalogue
     patch: |-
       - op: replace
